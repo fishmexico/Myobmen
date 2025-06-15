@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>EpicChange - Обмен крипты</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0; padding: 0;
+      background: #121212;
+      color: #eee;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 0 15px;
+    }
+    header {
+      background: #1f1f1f;
+      padding: 15px 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    header h1 {
+      color: #4caf50;
+      margin: 0;
+      font-weight: 900;
+      font-size: 28px;
+    }
+    nav a {
+      color: #a9a9a9;
+      margin-left: 20px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+    nav a:hover {
+      color: #4caf50;
+    }
+    main {
+      flex: 1 0 auto;
+      padding: 40px 0;
+    }
+    h2 {
+      color: #4caf50;
+      margin-bottom: 25px;
+      text-align: center;
+    }
+    .exchange-section form {
+      background: #222;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 0 25px rgba(76, 175, 80, 0.5);
+      max-width: 450px;
+      margin: 0 auto 50px;
+    }
+    label {
+      display: block;
+      margin-bottom: 10px;
+      font-weight: 700;
+      font-size: 16px;
+    }
+    select, input[type="number"] {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 25px;
+      border-radius: 8px;
+      border: none;
+      background: #333;
+      color: #eee;
+      font-size: 16px;
+      font-weight: 600;
+      transition: background 0.3s ease;
+    }
+    select:hover, input[type="number"]:hover {
+      background: #444;
+    }
+    button {
+      width: 100%;
+      background: #4caf50;
+      border: none;
+      padding: 16px;
+      font-size: 18px;
+      font-weight: 900;
+      color: #fff;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    button:hover {
+      background: #388e3c;
+    }
+    #result {
+      margin-top: 20px;
+      text-align: center;
+      font-weight: 700;
+      font-size: 18px;
+      color: #4caf50;
+      min-height: 30px;
+    }
+    .rates-section {
+      max-width: 960px;
+      margin: 0 auto 50px;
+    }
+    .rates {
+      display: flex;
+      justify-content: space-around;
+      flex-wrap: wrap;
+    }
+    .rate {
+      background: #222;
+      padding: 18px 25px;
+      border-radius: 12px;
+      width: 180px;
+      margin: 10px;
+      box-shadow: 0 0 15px rgba(76, 175, 80, 0.3);
+      text-align: center;
+      font-weight: 700;
+      font-size: 18px;
+      user-select: none;
+      transition: transform 0.3s ease;
+    }
+    .rate:hover {
+      transform: scale(1.05);
+    }
+    .reviews-section {
+      max-width: 800px;
+      margin: 0 auto 70px;
+      position: relative;
+    }
+    .reviews {
+      overflow: hidden;
+      position: relative;
+      height: 140px;
+    }
+    .review {
+      background: #222;
+      border-radius: 12px;
+      padding: 20px 25px;
+      position: absolute;
+      width: 100%;
+      top: 0;
+      left: 100%;
+      opacity: 0;
+      transition: all 0.5s ease;
+      font-style: italic;
+      font-size: 17px;
+      box-shadow: 0 0 15px rgba(76, 175, 80, 0.3);
+    }
+    .review.active {
+      left: 0;
+      opacity: 1;
+    }
+    .review .author {
+      font-weight: 700;
+      text-align: right;
+      color: #4caf50;
+      margin-top: 12px;
+      font-style: normal;
+    }
+    .contacts-section {
+      text-align: center;
+      font-size: 16px;
+      color: #a9a9a9;
+    }
+    .contacts-section a {
+      color: #4caf50;
+      text-decoration: none;
+      font-weight: 700;
+    }
+    .contacts-section a:hover {
+      text-decoration: underline;
+    }
+    footer {
+      background: #1f1f1f;
+      padding: 15px 0;
+      text-align: center;
+      color: #777;
+      font-size: 14px;
+      flex-shrink: 0;
+    }
+    @media (max-width: 600px) {
+      .rates {
+        flex-direction: column;
+        align-items: center;
+      }
+      .rate {
+        width: 90%;
+        margin: 10px 0;
+      }
+      .exchange-section form {
+        width: 90%;
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="container">
+    <h1>EpicChange</h1>
+    <nav>
+      <a href="#exchange">Обмен</a>
+      <a href="#rates">Курсы</a>
+      <a href="#reviews">Отзывы</a>
+      <a href="#contacts">Контакты</a>
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+  <section id="exchange" class="exchange-section">
+    <h2>Обмен криптовалюты быстро и надежно</h2>
+
+    <form id="exchangeForm">
+      <label for="fromCurrency">Отдаете</label>
+      <select id="fromCurrency" required>
+        <option value="" disabled selected>Выберите валюту</option>
+        <option value="BTC">Bitcoin (BTC)</option>
+        <option value="ETH">Ethereum (ETH)</option>
+        <option value="USDT">Tether (USDT)</option>
+        <option value="LTC">Litecoin (LTC)</option>
+      </select>
+
+      <label for="amount">Сумма</label>
+      <input type="number" id="amount" min="0.0001" step="0.0001" placeholder="Введите сумму" required />
+
+      <label for="toCurrency">Получаете</label>
+      <select id="toCurrency" required>
+        <option value="" disabled selected>Выберите валюту</option>
+        <option value="BTC">Bitcoin (BTC)</option>
+        <option value="ETH">Ethereum (ETH)</option>
+        <option value="USDT">Tether (USDT)</option>
+        <option value="LTC">Litecoin (LTC)</option>
+      </select>
+
+      <button type="submit">Обменять</button>
+    </form>
+
+    <div id="result"></div>
+  </section>
+
+  <section id="rates" class="rates-section">
+    <h2>Актуальные курсы</h2>
+    <div class="rates" id="ratesContainer">
+      <!-- Курс подгружается JS -->
+    </div>
+  </section>
+
+  <section id="reviews" class="reviews-section">
+    <h2>Отзывы клиентов</h2>
+    <div class="reviews" id="reviewsCarousel">
+      <div class="review active">
+        <p>"Очень быстрый обмен, всё прошло гладко!"</p>
+        <div class="author">— Алексей</div>
+      </div>
+      <div class="="review">
+        <p>"Рекомендую, выгодные курсы и быстрая поддержка."</p>
+        <div class="author">— Марина</div>
+      </div>
+      <div class="review">
+        <p>"Никаких проблем, обмен прошёл моментально."</p>
+        <div class="author">— Дмитрий</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contacts" class="contacts-section">
+    <h2>Контакты</h2>
+    <p>Telegram: <a href="https://t.me/epichange" target="_blank">@EpicChange</a></p>
+    <p>Email: support@epichange.online</p>
+  </section>
+</main>
+
+<footer>
+  <div class="container">
+    © 2025 EpicChange. Все права защищены.
+  </div>
+</footer>
+
+<script>
+  const ratesData = {
+    BTC_USDT: 27500,
+    ETH_USDT: 1850,
+    LTC_USDT: 150,
+    USDT_BTC: 1 / 27500,
+    USDT_ETH: 1 / 1850,
+    USDT_LTC: 1 / 150,
+    BTC_ETH: 27500 / 1850,
+    ETH_BTC: 1850 / 27500,
+    BTC_LTC: 27500 / 150,
+    LTC_BTC: 150 / 27500,
+    ETH_LTC: 1850 / 150,
+    LTC_ETH: 150 / 1850
+  };
+
+  function updateRates() {
+    const ratesContainer = document.getElementById('ratesContainer');
+    ratesContainer.innerHTML = '';
+    for (const [pair, rate] of Object.entries(ratesData)) {
+      const el = document.createElement('div');
+      el.className = 'rate';
+      el.innerHTML = `<div>${pair.replace('_', ' → ')}</div><div><strong>${rate.toFixed(6)}</strong></div>`;
+      ratesContainer.appendChild(el);
+    }
+  }
+
+  // Обмен
+  document.getElementById('exchangeForm').addEventListener('submit', e => {
+    e.preventDefault();
+
+    const from = document.getElementById('fromCurrency').value;
+    const to = document.getElementById('toCurrency').value;
+    const amount = parseFloat(document.getElementById('amount').value);
+    const resultBlock = document.getElementById('result');
+
+    if (from === to) {
+      alert('Выберите разные валюты для обмена');
+      return;
+    }
+    if (!amount || amount <= 0) {
+      alert('Введите корректную сумму');
+      return;
+    }
+
+    const pair = from + '_' + to;
+    if (!(pair in ratesData)) {
+      alert('Обмен для выбранных валют не поддерживается');
+      return;
+    }
+
+    const rate = ratesData[pair];
+    const exchanged = amount * rate;
+
+    resultBlock.textContent = `Вы получите примерно: ${exchanged.toFixed(6)} ${to}`;
+  });
+
+  // Карусель отзывов
+  const reviews = document.querySelectorAll('.review');
+  let currentReview = 0;
+
+  function showReview(idx) {
+    reviews.forEach((r, i) => {
+      r.classList.toggle('active', i === idx);
+    });
+  }
+
+  function nextReview() {
+    currentReview = (currentReview + 1) % reviews.length;
+    showReview(currentReview);
+  }
+
+  setInterval(nextReview, 4000);
+
+  window.onload = () => {
+    updateRates();
+    showReview(0);
+  };
+</script>
+
+</body>
+</html>
